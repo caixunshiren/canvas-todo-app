@@ -1,0 +1,22 @@
+.ToDoItem {
+  background-color: burlywood;
+}
+
+.Name {
+  margin-right: 30px;
+  display: inline;
+}
+
+.Tag {
+  margin-right: 30px;
+  vertical-align: middle;
+}
+
+.Check {
+  vertical-align: middle;
+}
+
+.Date {
+  display: inline;
+  margin-right: 30px;
+}
