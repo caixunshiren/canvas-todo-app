@@ -1,20 +1,150 @@
-import {useState} from 'react';
-import { Tag, Checkbox } from "antd";
+import { Tag, Table, Checkbox, Space } from "antd";
 import './ToDoItem.css';
 
-function ToDoItem(props) {
-  const [complete, setComplete] = useState(false);
+function onChange(completed) {
+  // would set it into opposite in database
+  return !completed;
+}
 
-  function onChange() {
-    setComplete(!complete);
-  }
+const columns = [
+  {
+    title: 'Task Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: text => <a className="Name">{text}</a>,
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+  },
+  {
+    title: 'Tags',
+    key: 'tags',
+    dataIndex: 'tags',
+    render: tags => (
+      <div className="Tag">
+        {tags.map(tag => {
+          let color = tag.length > 5 ? '#108ee9' : 'green'; // will change depending on the tag or something
+          if (tag === 'loser') {
+            color = 'volcano';
+          }
+          return (
+            <Tag className="IndividualTag" color={color} key={tag}>
+              {tag.toUpperCase()}
+            </Tag>
+          );
+        })}
+      </div>
+    ),
+  },
+  {
+    title: 'Completion',
+    key: 'completion',
+    render: completed => (
+      <Checkbox checked = {completed} onChange={onChange}/>
+    ),
+  },
+];
 
+const data = [
+  {
+    key: '1',
+    name: 'ESC190 - Quiz #10',
+    date: 32,
+    tags: ['nice', 'developer'],
+    completed: true,
+  },
+  {
+    key: '2',
+    name: 'ESC194 - Midterm #100',
+    date: 42,
+    tags: ['loser'],
+    completed: false,
+  },
+  {
+    key: '3',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '35',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '36',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '73',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '83',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '39',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '323',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '423',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '343',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '633',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+  {
+    key: '374',
+    name: 'MAT185 - Final #20',
+    date: 32,
+    tags: ['cool', 'teacher'],
+    completed: false,
+  },
+];
+
+function ToDoItem() {
   return (
     <div className="ToDoItem">
-      <h4 className="Name">Task Name</h4>
-      <h4 className="Date"> Jun 09, 2021</h4>
-      <Tag className = "Tag" color="green"> Tag </Tag>
-      <Checkbox className="Check" checked = {complete} onChange={onChange} > completed? </Checkbox>
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 }
