@@ -1,8 +1,9 @@
-import { Tag, Table, Checkbox, Space } from "antd";
+import React from 'react';
+import { Tag, Table, Checkbox } from "antd";
 import './ToDoItem.css';
 
 function onChange(completed) {
-  // would set it into opposite in database
+  // would set it into the opposite of current bool in database and that would update on the website
   return !completed;
 }
 
@@ -146,7 +147,7 @@ function ToDoItem() {
     <div className="ToDoItem">
       <Table columns={columns} dataSource={data} />
     </div>
-  );
+  ); 
 }
 
 export default ToDoItem;
