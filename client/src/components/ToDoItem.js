@@ -9,133 +9,192 @@ function onChange(completed) {
 
 const columns = [
   {
-    title: 'Task Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a className="Name">{text}</a>,
+    title: 'Subject',
+    dataIndex: 'subject',
+    key: 'subject',
+    sorter: (a, b) => a.subject > b.subject,
   },
   {
-    title: 'Date',
+    title: 'Task Name - database',
+    dataIndex: 'name',
+    key: 'name',
+    sorter: (a, b) => a.name > b.name,
+  },
+  {
+    title: 'Date Due - database',
     dataIndex: 'date',
     key: 'date',
+    sorter: (a, b) => a.date > b.date,
   },
   {
     title: 'Tags',
     key: 'tags',
     dataIndex: 'tags',
     render: tags => (
-      <div className="Tag">
+      <div>
         {tags.map(tag => {
-          let color = tag.length > 5 ? '#108ee9' : 'green'; // will change depending on the tag or something
-          if (tag === 'loser') {
+          let color = tag.length > 5 ? 'blue' : 'green'; // will change depending on the tag or something
+          if (tag === 'exam' || tag === 'midterm') 
+          {
             color = 'volcano';
           }
+          else if (tag === 'teacher')
+          {
+            color = 'purple';
+          }
           return (
-            <Tag className="IndividualTag" color={color} key={tag}>
+            <Tag color={color} key={tag}>
               {tag.toUpperCase()}
             </Tag>
           );
         })}
       </div>
     ),
+    filters: [
+      {
+        text: 'Exams & Midterms',
+        value: ['exam', 'midterm'],
+      },
+      {
+        text: 'Assignments',
+        value: ['assignment'],
+      }
+    ],
+    onFilter: (value, record) => 
+    {
+      for (const tag of record.tags)
+      {
+        if (value.indexOf(tag) > -1)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
   },
   {
-    title: 'Completion',
-    key: 'completion',
-    render: completed => (
-      <Checkbox checked = {completed} onChange={onChange}/>
+    title: 'Completed? - database',
+    key: 'completed',
+    filters: [
+      {
+        text: 'Only show completed',
+        value: true,
+      },
+      {
+        text: 'Only show not completed',
+        value: false,
+      }
+    ],
+    onFilter: (value, record) => record.completed === value,
+    filterMultiple: false,
+    sorter: (a, b) => a.completed - b.completed, //not sure about this one, will see once connected with db
+    render: a => (
+      <Checkbox checked = {a.completed} onChange={onChange}/> // completed would be from db
     ),
   },
 ];
 
 const data = [
   {
+    subject: 'ESC190',
     key: '1',
-    name: 'ESC190 - Quiz #10',
+    name: 'Quiz #10',
     date: 32,
-    tags: ['nice', 'developer'],
+    tags: ['quiz', 'mandatory'],
     completed: true,
   },
   {
+    subject: 'ESC194',
     key: '2',
-    name: 'ESC194 - Midterm #100',
+    name: 'Assignment #100',
     date: 42,
-    tags: ['loser'],
+    tags: ['assignment'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '3',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
-    tags: ['cool', 'teacher'],
+    tags: ['exam'],
     completed: false,
   },
   {
+    subject: 'AAA',
     key: '35',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
-    tags: ['cool', 'teacher'],
+    tags: ['exam', 'mandatory'],
     completed: false,
   },
   {
+    subject: 'ABC',
     key: '36',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
-    tags: ['cool', 'teacher'],
+    tags: ['midterm', 'teacher'],
     completed: false,
   },
   {
+    subject: 'AAB',
     key: '73',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
-    tags: ['cool', 'teacher'],
+    tags: ['midterm', 'TA'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '83',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
-    tags: ['cool', 'teacher'],
+    tags: ['teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '39',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '323',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '423',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '343',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '633',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
   },
   {
+    subject: 'MAT185',
     key: '374',
-    name: 'MAT185 - Final #20',
+    name: 'Final #20',
     date: 32,
     tags: ['cool', 'teacher'],
     completed: false,
@@ -144,7 +203,7 @@ const data = [
 
 function ToDoItem() {
   return (
-    <div className="ToDoItem">
+    <div>
       <Table columns={columns} dataSource={data} />
     </div>
   ); 
