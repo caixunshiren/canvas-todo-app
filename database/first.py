@@ -2,7 +2,7 @@ import pymongo
 from pymongo import MongoClient
 import datetime
 
-cluster = MongoClient("mongodb+srv://caixunshiren:quercusapp@cluster0.ex01m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+cluster = MongoClient("mongodb+srv://caixunshiren:password@cluster0.ex01m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = cluster["Quercus_Reminder_App"]
 collection = db["Users"]
 
